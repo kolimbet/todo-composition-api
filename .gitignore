@@ -22,5 +22,8 @@ pnpm-debug.log*
 *.sln
 *.sw?
 
-#Server logs
+# Server logs
 logs/*
+
+# Config file
+src/config.js

@@ -28,10 +28,10 @@ Install the necessary NPM packages:
 npm install
 ```
 
-In the file /src/api.js in the axios.defaults.baseUrl variable, write the URL for your backend:
+Create a configuration file /src/config.js and specify create a BACKEND_DOMAIN constant in it, in which specify the server URL:
 
 ```
-axios.defaults.baseURL = "http://todo-app.back";
+export const BACKEND_DOMAIN = "http://todo-app.back";
 ```
 
 Prescribe autocorrect paths for your IDE. I use VS Code and add a local

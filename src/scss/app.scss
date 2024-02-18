@@ -1,0 +1,141 @@
+@import "../../node_modules/font-awesome/css/font-awesome.min.css";
+
+.top-nav-bg-gradient {
+  background: rgb(30, 64, 175);
+  background: linear-gradient(
+    90deg,
+    rgba(30, 64, 175, 1) 0%,
+    rgba(49, 46, 129, 1) 100%
+  );
+}
+
+/* Box Sizing */
+.box {
+  &-border {
+    box-sizing: border-box;
+  }
+  &-content {
+    box-sizing: content-box;
+  }
+}
+
+/* single animations */
+.fade {
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.5s linear;
+  }
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+  }
+}
+
+.slide-left {
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.5s linear;
+  }
+  &-enter-from,
+  &-leave-to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+.folding-x-100 {
+  &-enter-from,
+  &-leave-to {
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0;
+  }
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.5s linear;
+    overflow: hidden;
+  }
+  &-enter-to,
+  &-leave-from {
+    max-width: auto;
+    overflow: auto;
+  }
+}
+
+$folding-y-heights: 50, 300, 1000;
+.folding-y {
+  @each $height in $folding-y-heights {
+    &-#{$height} {
+      &-enter-from,
+      &-leave-to {
+        max-height: 0px;
+        opacity: 0;
+        overflow: hidden;
+      }
+      &-enter-to,
+      &-leave-from {
+        max-height: #{$height}px;
+        opacity: 1;
+        overflow: auto;
+      }
+      &-enter-active,
+      &-leave-active {
+        transition: all 0.5s linear;
+        overflow: hidden;
+      }
+    }
+  }
+}
+
+/* list animations */
+$list-folding-y-heights: 100, 150;
+.list-folding-y {
+  @each $height in $list-folding-y-heights {
+    &-#{$height} {
+      &-move {
+        transition: all 1s linear;
+      }
+      &-enter-from,
+      &-leave-to {
+        max-height: 0px;
+        opacity: 0;
+        overflow: hidden;
+      }
+      &-enter-to,
+      &-leave-from {
+        max-height: #{$height}px;
+        opacity: 1;
+        overflow: auto;
+      }
+      &-enter-active {
+        transition: all 0.5s 0.5s linear;
+        overflow: hidden;
+      }
+      &-leave-active {
+        transition: all 0.5s linear;
+        overflow: hidden;
+      }
+    }
+  }
+}
+
+.list-scale01 {
+  &-move {
+    transition: all 1s linear;
+  }
+  &-enter-from,
+  &-leave-to {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  &-enter-to,
+  &-leave-from {
+    opacity: 1;
+  }
+  &-enter-active {
+    transition: all 0.5s 0.5s linear;
+  }
+  &-leave-active {
+    transition: all 0.5s linear;
+  }
+}
