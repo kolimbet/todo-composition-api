@@ -17,6 +17,9 @@ export default createStore({
     avatarId(state) {
       return state.user.avatar_id;
     },
+    userName(state) {
+      return state.user?.name ?? "...";
+    },
   },
   mutations: {
     updateAuthenticated(state, userData = null) {

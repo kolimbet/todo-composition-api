@@ -5,11 +5,18 @@
       class="mb-4 d-flex justify-content-center align-items-center min-vh-50"
     >
       <div class="w-percent-100 mw-md">
+        <!-- Request Error -->
+        <ErrorSingle
+          :is-error="errorTrigger"
+          :error-object="errorObject"
+          :reload-trigger="triggerForReloadingErrors"
+          class="mb-4"
+        />
+
         <div class="mb-4">
           <label for="form-email" class="fs-sm text-secondary">Email</label>
           <input
             v-model="form.email"
-            id="form-email"
             type="email"
             class="form-control"
             placeholder="Email"
@@ -22,7 +29,6 @@
           >
           <input
             v-model="form.password"
-            id="form-password"
             type="password"
             class="form-control"
             placeholder="Password"
@@ -32,7 +38,6 @@
         <div class="mb-4 form-check">
           <input
             v-model="form.remember"
-            id="remember-me"
             name="remember"
             type="checkbox"
             class="form-check-input"
@@ -64,7 +69,7 @@
                 />
               </svg>
             </span>
-            {{ processing ? "Please wait" : "Sign in" }}
+            {{ requestProcessing ? "Please wait" : "Sign in" }}
           </button>
         </div>
 
@@ -83,35 +88,46 @@
 
 <script setup>
 import store from "@/store";
-import { reactive, ref } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useRequest } from "@/composables/Request.js";
+import ErrorSingle from "../inc/ErrorSingle.vue";
 
 const router = useRouter();
 
-const form = reactive({
+const form = ref({
   email: "",
   password: "",
   remember: false,
 });
 
-const processing = ref(false);
+const {
+  requestProcessing,
+  triggerForReloadingErrors,
+  errorTrigger,
+  errorObject,
+  reloadErrors,
+} = useRequest();
 
 function login() {
-  if (!processing.value && form.email && form.password) {
-    processing.value = true;
-    console.log(form);
+  if (!requestProcessing.value && form.value.email && form.value.password) {
+    requestProcessing.value = true;
+    reloadErrors();
+
     store
-      .dispatch("login", form)
+      .dispatch("login", form.value)
       .then((userData) => {
-        form.email = form.password = "";
+        form.value.email = form.value.password = "";
         console.log(`Вы успешно вошли как ${userData.name}`);
         router.replace({ name: "home" });
       })
       .catch((err) => {
-        console.log("login() catch:", err);
+        // console.log("login() catch:", err);
+        errorObject.value.$message = err;
+        errorTrigger.value = true;
       })
       .finally(() => {
-        processing.value = false;
+        requestProcessing.value = false;
       });
   }
 }

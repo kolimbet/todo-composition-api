@@ -15,7 +15,7 @@
             class="d-block h-8 w-8 rounded-pill object-fit-contain"
           />
           <span class="d-flex align-items-center px-2 py-1 fs-sm">{{
-            store.state.user?.name ?? "..."
+            store.getters.userName
           }}</span>
         </RouterLink>
         <div
