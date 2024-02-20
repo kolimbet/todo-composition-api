@@ -21,6 +21,11 @@
             class="form-control"
             placeholder="Email"
           />
+
+          <ErrorList
+            :error-list="v$.form.email.$errors"
+            :reload-trigger="triggerForReloadingErrors"
+          />
         </div>
 
         <div class="mb-4">
@@ -32,6 +37,11 @@
             type="password"
             class="form-control"
             placeholder="Password"
+          />
+
+          <ErrorList
+            :error-list="v$.form.password.$errors"
+            :reload-trigger="triggerForReloadingErrors"
           />
         </div>
 
@@ -92,6 +102,9 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useRequest } from "@/composables/Request.js";
 import ErrorSingle from "../inc/ErrorSingle.vue";
+import { useVuelidate } from "@vuelidate/core";
+import { loginRules } from "@/validations/LoginRules";
+import ErrorList from "../inc/ErrorList.vue";
 
 const router = useRouter();
 
@@ -109,26 +122,39 @@ const {
   reloadErrors,
 } = useRequest();
 
-function login() {
-  if (!requestProcessing.value && form.value.email && form.value.password) {
-    requestProcessing.value = true;
-    reloadErrors();
-
-    store
-      .dispatch("login", form.value)
-      .then((userData) => {
-        form.value.email = form.value.password = "";
-        console.log(`Вы успешно вошли как ${userData.name}`);
-        router.replace({ name: "home" });
-      })
-      .catch((err) => {
-        // console.log("login() catch:", err);
-        errorObject.value.$message = err;
-        errorTrigger.value = true;
-      })
-      .finally(() => {
-        requestProcessing.value = false;
-      });
+const v$ = useVuelidate(
+  loginRules,
+  { form },
+  {
+    $lazy: true,
   }
+);
+
+function login() {
+  requestProcessing.value = true;
+  reloadErrors();
+
+  v$.value.$validate().then(() => {
+    // console.log(v$.value);
+    if (v$.value.$invalid) {
+      requestProcessing.value = false;
+    } else {
+      store
+        .dispatch("login", form.value)
+        .then((userData) => {
+          form.value.email = form.value.password = "";
+          console.log(`Вы успешно вошли как ${userData.name}`);
+          router.replace({ name: "home" });
+        })
+        .catch((err) => {
+          // console.log("login() catch:", err);
+          errorObject.value.$message = err;
+          errorTrigger.value = true;
+        })
+        .finally(() => {
+          requestProcessing.value = false;
+        });
+    }
+  });
 }
 </script>
