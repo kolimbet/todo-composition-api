@@ -40,12 +40,21 @@ const routes = [
     },
   },
   {
-    path: "/user",
-    name: "user",
-    component: () => import("@/components/user/UserPage.vue"),
+    path: "/account/:section",
+    name: "account_section",
+    component: () => import("@/components/account/UserAccount.vue"),
     meta: {
       initFinished: true,
-      requiresAuth: true,
+      requiredAuth: true,
+    },
+  },
+  {
+    path: "/account",
+    name: "account",
+    component: () => import("@/components/account/UserAccount.vue"),
+    meta: {
+      initFinished: true,
+      requiredAuth: true,
     },
   },
 ];
@@ -62,7 +71,6 @@ router.beforeEach((to, from, next) => {
     if (!getInitiated.value) next("/loading");
     else {
       if (to.matched.some((record) => record.meta.requiresAuth)) {
-        // if (store.state.authenticated) next();
         if (getAuthorized.value) next();
         else next("/login");
       } else {

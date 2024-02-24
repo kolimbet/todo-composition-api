@@ -6,7 +6,7 @@
         class="rounded-pill h-8 d-flex flex-wrap justify-content-center align-items-center bg-blue-light"
       >
         <RouterLink
-          :to="{ name: 'user' }"
+          :to="{ name: 'account' }"
           class="d-flex align-items-center w-max text-dark text-secondary-hover text-decoration-none fw-bold"
           title="User Page"
         >
