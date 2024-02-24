@@ -1,5 +1,6 @@
-import store from "@/store";
+// import store from "@/store";
 import { createRouter, createWebHistory } from "vue-router";
+import { getInitiated, getAuthorized } from "@/composables/storeAuth";
 
 const routes = [
   {
@@ -56,11 +57,13 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  // console.log({ from, to });
   if (to.matched.some((record) => record.meta.initFinished)) {
-    if (!store.state.initial) next("/loading");
+    if (!getInitiated.value) next("/loading");
     else {
       if (to.matched.some((record) => record.meta.requiresAuth)) {
-        if (store.state.authenticated) next();
+        // if (store.state.authenticated) next();
+        if (getAuthorized.value) next();
         else next("/login");
       } else {
         next();

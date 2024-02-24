@@ -2,7 +2,7 @@
   <div class="d-flex align-items-center">
     <Transition name="fade" mode="out-in">
       <div
-        v-if="store.state.authenticated"
+        v-if="getAuthorized"
         class="rounded-pill h-8 d-flex flex-wrap justify-content-center align-items-center bg-blue-light"
       >
         <RouterLink
@@ -11,15 +11,15 @@
           title="User Page"
         >
           <img
-            :src="store.getters.avatarUrl"
+            :src="getAvatarUrl"
             class="d-block h-8 w-8 rounded-pill object-fit-contain"
           />
           <span class="d-flex align-items-center px-2 py-1 fs-sm">{{
-            store.getters.userName
+            getUserName
           }}</span>
         </RouterLink>
         <div
-          @click="logout"
+          @click="logout()"
           class="d-flex align-items-center ms-0 bg-transparent text-dark text-secondary-hover cursor-pointer"
           title="logout"
         >
@@ -52,7 +52,12 @@
 
 <script setup>
 import { parseErrorObject } from "@/lib/errors";
-import store from "@/store";
+import {
+  getAuthorized,
+  getAvatarUrl,
+  getUserName,
+  actionLogout,
+} from "@/composables/storeAuth";
 import { nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
@@ -60,8 +65,7 @@ const router = useRouter();
 const route = useRoute();
 
 function logout() {
-  store
-    .dispatch("logout")
+  actionLogout()
     .then(() => {
       nextTick(() => {
         router.go(route.path);

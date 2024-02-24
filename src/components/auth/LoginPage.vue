@@ -97,23 +97,16 @@
 </template>
 
 <script setup>
-import store from "@/store";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { useRequest } from "@/composables/Request.js";
+import { useRequest } from "@/composables/request";
+import { actionLogin } from "@/composables/storeAuth";
 import ErrorSingle from "../inc/ErrorSingle.vue";
 import { useVuelidate } from "@vuelidate/core";
 import { loginRules } from "@/validations/LoginRules";
 import ErrorList from "../inc/ErrorList.vue";
 
 const router = useRouter();
-
-const form = ref({
-  email: "",
-  password: "",
-  remember: false,
-});
-
 const {
   requestProcessing,
   triggerForReloadingErrors,
@@ -121,6 +114,12 @@ const {
   errorObject,
   reloadErrors,
 } = useRequest();
+
+const form = ref({
+  email: "",
+  password: "",
+  remember: false,
+});
 
 const v$ = useVuelidate(
   loginRules,
@@ -139,8 +138,7 @@ function login() {
     if (v$.value.$invalid) {
       requestProcessing.value = false;
     } else {
-      store
-        .dispatch("login", form.value)
+      actionLogin(form.value)
         .then((userData) => {
           form.value.email = form.value.password = "";
           console.log(`Вы успешно вошли как ${userData.name}`);

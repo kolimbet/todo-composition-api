@@ -17,10 +17,10 @@
 <script setup>
 import TopNavigation from "@/components/inc/TopNavigation.vue";
 import { onMounted } from "vue";
-import store from "./store";
+import { actionStartInit } from "./composables/storeAuth";
 
 onMounted(() => {
-  store.dispatch("startInit");
+  actionStartInit();
 });
 </script>
 
