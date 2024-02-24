@@ -301,6 +301,7 @@ const api = {
     }),
   taskCounter: () =>
     new Promise((resolve, reject) => {
+      // setTimeout(() => {
       axios
         .get(sourceUrls.tasks + "/counter")
         .then(({ data }) => {
@@ -312,6 +313,7 @@ const api = {
           // console.log("ERROR: taskCounter request error - " + message);
           reject(message);
         });
+      // }, 1000);
     }),
 };
 

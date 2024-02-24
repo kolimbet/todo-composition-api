@@ -112,6 +112,7 @@ const {
   triggerForReloadingErrors,
   errorTrigger,
   errorObject,
+  setError,
   reloadErrors,
 } = useRequest();
 
@@ -130,6 +131,7 @@ const v$ = useVuelidate(
 );
 
 function login() {
+  if (requestProcessing.value) return;
   requestProcessing.value = true;
   reloadErrors();
 
@@ -146,8 +148,7 @@ function login() {
         })
         .catch((err) => {
           // console.log("login() catch:", err);
-          errorObject.value.$message = err;
-          errorTrigger.value = true;
+          setError(err);
         })
         .finally(() => {
           requestProcessing.value = false;

@@ -8,6 +8,11 @@ export function useRequest() {
     $message: "",
   });
 
+  const setError = (err) => {
+    errorObject.value.$message = err;
+    errorTrigger.value = true;
+  };
+
   const reloadingMessages = () => {
     triggerForReloadingErrors.value = !triggerForReloadingErrors.value;
   };
@@ -22,6 +27,7 @@ export function useRequest() {
     triggerForReloadingErrors,
     errorTrigger,
     errorObject,
+    setError,
     reloadErrors,
   };
 }
