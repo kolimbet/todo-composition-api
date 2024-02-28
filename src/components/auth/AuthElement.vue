@@ -59,16 +59,16 @@ import {
   actionLogout,
 } from "@/composables/storeAuth";
 import { nextTick } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
-const route = useRoute();
+// const route = useRoute();
 
 function logout() {
   actionLogout()
     .then(() => {
       nextTick(() => {
-        router.go(route.path);
+        router.push({ name: "login" });
       });
     })
     .catch((err) => {

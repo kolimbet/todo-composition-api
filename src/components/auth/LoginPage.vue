@@ -17,6 +17,7 @@
           <label for="form-email" class="fs-sm text-secondary">Email</label>
           <input
             v-model="form.email"
+            id="form-email"
             type="email"
             class="form-control"
             placeholder="Email"
@@ -34,6 +35,7 @@
           >
           <input
             v-model="form.password"
+            id="form-password"
             type="password"
             class="form-control"
             placeholder="Password"
@@ -48,6 +50,7 @@
         <div class="mb-4 form-check">
           <input
             v-model="form.remember"
+            id="remember-me"
             name="remember"
             type="checkbox"
             class="form-check-input"
@@ -97,13 +100,13 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useRequest } from "@/composables/request";
 import { actionLogin } from "@/composables/storeAuth";
 import ErrorSingle from "../inc/ErrorSingle.vue";
 import { useVuelidate } from "@vuelidate/core";
-import { loginRules } from "@/validations/LoginRules";
+import { required, email } from "@vuelidate/validators";
 import ErrorList from "../inc/ErrorList.vue";
 
 const router = useRouter();
@@ -121,6 +124,18 @@ const form = ref({
   password: "",
   remember: false,
 });
+
+const loginRules = computed(() => ({
+  form: {
+    email: {
+      required,
+      email,
+    },
+    password: {
+      required,
+    },
+  },
+}));
 
 const v$ = useVuelidate(
   loginRules,

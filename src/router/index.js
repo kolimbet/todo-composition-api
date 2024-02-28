@@ -45,7 +45,7 @@ const routes = [
     component: () => import("@/components/account/UserAccount.vue"),
     meta: {
       initFinished: true,
-      requiredAuth: true,
+      requiresAuth: true,
     },
   },
   {
@@ -54,7 +54,7 @@ const routes = [
     component: () => import("@/components/account/UserAccount.vue"),
     meta: {
       initFinished: true,
-      requiredAuth: true,
+      requiresAuth: true,
     },
   },
 ];
@@ -66,13 +66,15 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  // console.log({ from, to });
-  if (to.matched.some((record) => record.meta.initFinished)) {
+  // console.log("Routing to " + to.fullPath);
+  if (to.meta.initFinished) {
+    // console.log("Checking the end of initialization");
     if (!getInitiated.value) next("/loading");
     else {
-      if (to.matched.some((record) => record.meta.requiresAuth)) {
-        if (getAuthorized.value) next();
-        else next("/login");
+      if (to.meta.requiresAuth) {
+        // console.log("Сhecking Autorized", getAuthorized.value);
+        if (!getAuthorized.value) next("/login");
+        else next();
       } else {
         next();
       }
