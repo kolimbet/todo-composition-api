@@ -1,9 +1,9 @@
 <template>
   <div
-    class="mt-1 px-3 py-1 d-flex align-items-center justify-content-between rounded-2 border border-red border-opacity-50 bg-red-light text-red-dark"
+    class="mt-1 ps-3 pe-1 py-1 d-flex align-items-center justify-content-between rounded-2 border border-red border-opacity-50 bg-red-light text-red-dark"
   >
     <span>{{ props.error.$message }}</span>
-    <span @click="emit('close')" class="px-0-75rem py-1 cursor-pointer">
+    <span @click="emit('close')" class="px-2 py-1 cursor-pointer">
       <svg
         class="h-5 w-5 fill-current text-red text-red-dark-hover"
         role="button"

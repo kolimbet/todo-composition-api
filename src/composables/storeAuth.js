@@ -96,3 +96,31 @@ export const actionLogout = () =>
         });
     }
   });
+
+export const actionSetAvatar = (imageId) =>
+  new Promise((resolve, reject) => {
+    api
+      .setUserAvatar(imageId)
+      .then((data) => {
+        setAuthData(data);
+        resolve(data);
+      })
+      .catch((err) => {
+        console.log("storage->index->setAvatar catch", err);
+        reject(err);
+      });
+  });
+
+export const actionDeleteAvatar = () =>
+  new Promise((resolve, reject) => {
+    api
+      .deleteUserAvatar()
+      .then((data) => {
+        setAuthData(data);
+        resolve(data);
+      })
+      .catch((err) => {
+        console.log("storage->index->deleteAvatar catch", err);
+        reject(err);
+      });
+  });

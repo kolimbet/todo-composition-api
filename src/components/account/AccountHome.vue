@@ -1,6 +1,9 @@
 <template>
   <div class="position-relative">
-    <UpdateIcon @click="requestTaskCounter()" />
+    <IconUpdate
+      @click="requestTaskCounter()"
+      class="position-absolute end-1 top-0"
+    />
 
     <h3 class="text-center">User Home</h3>
     <div class="min-vh-50">
@@ -47,11 +50,12 @@
 </template>
 
 <script setup>
+import IconUpdate from "../inc/IconUpdate.vue";
+import ErrorSingle from "../inc/ErrorSingle.vue";
+
 import { onMounted, ref } from "vue";
 import { getAvatarUrl, getUserName } from "@/composables/storeAuth";
 import { useRequest } from "@/composables/request";
-import UpdateIcon from "../inc/UpdateIcon.vue";
-import ErrorSingle from "../inc/ErrorSingle.vue";
 import api from "@/api";
 
 const {

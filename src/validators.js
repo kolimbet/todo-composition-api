@@ -12,7 +12,6 @@ export const validatingCurrentPassword = (value) => {
   let result = {
     $valid: false,
     message: "The current password is entered incorrectly",
-    extraParams: {},
   };
 
   return new Promise((resolve, reject) => {
@@ -34,4 +33,55 @@ export const validatingCurrentPassword = (value) => {
         });
     }
   });
+};
+
+function checkImageSize(image, maxSizeKB = 1024) {
+  const maxSizeB = maxSizeKB * 1024;
+  const result = {
+    $valid: false,
+    message: `The file size should not exceed ${maxSizeKB} kB`,
+  };
+
+  if (image.size <= maxSizeB) result.$valid = true;
+
+  return result;
+}
+
+function checkImageType(image) {
+  const acceptableTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    // "image/gif",
+  ];
+  const result = {
+    $valid: false,
+    message: "Acceptable image types: jpeg, png, webp",
+  };
+
+  if (acceptableTypes.includes(image.type)) result.$valid = true;
+
+  return result;
+}
+
+export const validateImageToAvatar = (value) => {
+  let result = {
+    $valid: false,
+    message: "",
+  };
+
+  // console.log("validateImageToAvatar", value);
+  if (value === undefined || value === "" || !value) {
+    result.message = "The file is not selected";
+    return result;
+  }
+
+  const sizeCheck = checkImageSize(value);
+  if (!sizeCheck.$valid) return sizeCheck;
+
+  const typeCheck = checkImageType(value);
+  if (!typeCheck.$valid) return typeCheck;
+
+  result.$valid = true;
+  return result;
 };
