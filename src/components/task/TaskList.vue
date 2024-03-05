@@ -9,6 +9,12 @@
 
     <h2 class="text-center">Your task List</h2>
 
+    <TaskFilter
+      v-model:filter="taskFilter"
+      v-model:order="taskOrder"
+      v-model:limit-on-page="taskLimitOnPage"
+    />
+
     <div
       v-if="filteredTasks.length"
       class="mt-0 row row-cols-1 row-cols-lg-2 gx-0-75rem gy-0-75rem"
@@ -26,8 +32,24 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
+import TaskFilter from "./TaskFilter.vue";
 
-const taskList = reactive([]);
-const filteredTasks = reactive([]);
+// import { useRequest } from "@/composables/request";
+import { ref } from "vue";
+
+const taskList = ref([]);
+const filteredTasks = ref([]);
+
+const taskFilter = ref("all");
+const taskOrder = ref("new");
+const taskLimitOnPage = ref(20);
+
+// const {
+//   requestProcessing,
+//   triggerForReloadingErrors,
+//   errorTrigger,
+//   errorObject,
+//   setError,
+//   reloadErrors,
+// } = useRequest();
 </script>
