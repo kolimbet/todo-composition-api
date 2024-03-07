@@ -1,10 +1,5 @@
 <template>
-  <div class="position-relative">
-    <IconUpdate
-      @click="requestTaskList()"
-      class="position-absolute end-1 top-2"
-    />
-
+  <div class="">
     <h2 class="text-center">Your task List</h2>
 
     <TaskFilter
@@ -13,9 +8,34 @@
       v-model:limit-on-page="taskLimitOnPage"
     />
 
-    <!-- pagination -->
+    <div class="mb-0-75rem d-flex justify-content-between align-items-center">
+      <IconUpdate @click="requestTaskList()" class="ms-0-75rem me-0-75rem" />
 
-    <!-- add form -->
+      <Transition name="fade" mode="out-in">
+        <ButtonPill
+          v-if="addFormIsOpen"
+          @click="toggleAddForm()"
+          :text="'Close'"
+          :title="'Close Add form'"
+          class="btn-red"
+          ><i class="fa fa-times-circle me-1" aria-hidden="true"></i
+        ></ButtonPill>
+        <ButtonPill
+          v-else
+          @click="toggleAddForm()"
+          :text="'Add'"
+          :title="'Open Add form'"
+          class="btn-green"
+          ><i class="fa fa-plus-circle me-1" aria-hidden="true"></i
+        ></ButtonPill>
+      </Transition>
+    </div>
+
+    <TaskCreate
+      :is-open="addFormIsOpen"
+      @close="closeAddForm()"
+      @add="addTaskToList($event)"
+    />
 
     <ErrorSingle
       :is-error="errorTrigger"
@@ -63,6 +83,8 @@ import IconUpdate from "../inc/IconUpdate.vue";
 import ErrorSingle from "../inc/ErrorSingle.vue";
 import PaginationLine from "../inc/PaginationLine.vue";
 import TaskItem from "./TaskItem.vue";
+import TaskCreate from "./TaskCreate.vue";
+import ButtonPill from "../inc/ButtonPill.vue";
 
 import api from "@/api";
 import { useRequest } from "@/composables/request";
@@ -77,6 +99,8 @@ const taskOrder = ref("new");
 const taskLimitOnPage = ref(20);
 
 const page = ref(1);
+
+const addFormIsOpen = ref(false);
 
 const router = useRouter();
 const route = useRoute();
@@ -183,6 +207,17 @@ function updateTask(taskId, changedTask) {
     1,
     changedTask
   );
+}
+
+function addTaskToList(newTask) {
+  taskList.value.push(newTask);
+}
+
+function toggleAddForm() {
+  addFormIsOpen.value = !addFormIsOpen.value;
+}
+function closeAddForm() {
+  addFormIsOpen.value = false;
 }
 
 function setPage() {
