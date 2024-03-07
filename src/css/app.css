@@ -56,6 +56,20 @@
   transition: all 0.5s linear;
   overflow: hidden;
 }
+.folding-y-100-enter-from, .folding-y-100-leave-to {
+  max-height: 0px;
+  opacity: 0;
+  overflow: hidden;
+}
+.folding-y-100-enter-to, .folding-y-100-leave-from {
+  max-height: 100px;
+  opacity: 1;
+  overflow: auto;
+}
+.folding-y-100-enter-active, .folding-y-100-leave-active {
+  transition: all 0.5s linear;
+  overflow: hidden;
+}
 .folding-y-300-enter-from, .folding-y-300-leave-to {
   max-height: 0px;
   opacity: 0;

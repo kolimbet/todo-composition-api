@@ -62,7 +62,7 @@
   }
 }
 
-$folding-y-heights: 50, 300, 1000;
+$folding-y-heights: 50, 100, 300, 1000;
 .folding-y {
   @each $height in $folding-y-heights {
     &-#{$height} {
