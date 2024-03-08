@@ -3,8 +3,9 @@
     <h3 class="text-center">Change password</h3>
     <div class="d-flex justify-content-center align-items-center min-vh-50">
       <div class="w-percent-100 mw-md">
-        <template v-if="changePasswordIsCompleted">
+        <Transition name="fade" mode="out-in">
           <div
+            v-if="changePasswordIsCompleted"
             class="px-3 py-2 mx-auto mt-4 rounded-2 border border-green border-opacity-50 bg-green-light text-green-dark"
           >
             <div class="mb-4 text-center">
@@ -26,97 +27,97 @@
               </button>
             </div>
           </div>
-        </template>
-        <template v-else>
-          <!-- Request Error -->
-          <ErrorSingle
-            :is-error="errorTrigger"
-            :error-object="errorObject"
-            :reload-trigger="triggerForReloadingErrors"
-            class="mb-4"
-          />
-
-          <div class="mb-4">
-            <label for="form-password" class="fs-sm text-secondary"
-              >Password</label
-            >
-            <input
-              v-model="form.password"
-              id="form-password"
-              type="password"
-              class="form-control"
-              placeholder="Password"
-            />
-
-            <ErrorList
-              :error-list="v$.form.password.$errors"
+          <div v-else>
+            <!-- Request Error -->
+            <ErrorSingle
+              :is-error="errorTrigger"
+              :error-object="errorObject"
               :reload-trigger="triggerForReloadingErrors"
-            />
-          </div>
-
-          <div class="mb-4">
-            <label for="form-new-password" class="fs-sm text-secondary"
-              >New password</label
-            >
-            <input
-              v-model="form.new_password"
-              id="form-new-password"
-              type="password"
-              class="form-control"
-              placeholder="New password"
+              class="mb-4"
             />
 
-            <ErrorList
-              :error-list="v$.form.new_password.$errors"
-              :reload-trigger="triggerForReloadingErrors"
-            />
-          </div>
-
-          <div class="mb-4">
-            <label for="form-new-password-repeat" class="fs-sm text-secondary"
-              >Repeat new password</label
-            >
-            <input
-              v-model="form.new_password_repeat"
-              id="form-new-password-repeat"
-              type="password"
-              class="form-control"
-              placeholder="Repeat new password"
-            />
-
-            <ErrorList
-              :error-list="v$.form.new_password_repeat.$errors"
-              :reload-trigger="triggerForReloadingErrors"
-            />
-          </div>
-
-          <div class="mb-4">
-            <button
-              @click="changePassword()"
-              type="button"
-              class="btn btn-blue w-percent-100 position-relative"
-            >
-              <span
-                class="d-flex align-items-center text-light opacity-50 position-absolute top-0 bottom-0 start-0 ps-2"
+            <div class="mb-4">
+              <label for="form-password" class="fs-sm text-secondary"
+                >Password</label
               >
-                <svg
-                  class="h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
+              <input
+                v-model="form.password"
+                id="form-password"
+                type="password"
+                class="form-control"
+                placeholder="Password"
+              />
+
+              <ErrorList
+                :error-list="v$.form.password.$errors"
+                :reload-trigger="triggerForReloadingErrors"
+              />
+            </div>
+
+            <div class="mb-4">
+              <label for="form-new-password" class="fs-sm text-secondary"
+                >New password</label
+              >
+              <input
+                v-model="form.new_password"
+                id="form-new-password"
+                type="password"
+                class="form-control"
+                placeholder="New password"
+              />
+
+              <ErrorList
+                :error-list="v$.form.new_password.$errors"
+                :reload-trigger="triggerForReloadingErrors"
+              />
+            </div>
+
+            <div class="mb-4">
+              <label for="form-new-password-repeat" class="fs-sm text-secondary"
+                >Repeat new password</label
+              >
+              <input
+                v-model="form.new_password_repeat"
+                id="form-new-password-repeat"
+                type="password"
+                class="form-control"
+                placeholder="Repeat new password"
+              />
+
+              <ErrorList
+                :error-list="v$.form.new_password_repeat.$errors"
+                :reload-trigger="triggerForReloadingErrors"
+              />
+            </div>
+
+            <div class="mb-4">
+              <button
+                @click="changePassword()"
+                type="button"
+                class="btn btn-blue w-percent-100 position-relative"
+              >
+                <span
+                  class="d-flex align-items-center text-light opacity-50 position-absolute top-0 bottom-0 start-0 ps-2"
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </span>
-              {{ requestProcessing ? "Please wait" : "Update" }}
-            </button>
+                  <svg
+                    class="h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                {{ requestProcessing ? "Please wait" : "Update" }}
+              </button>
+            </div>
           </div>
-        </template>
+        </Transition>
       </div>
     </div>
   </div>
