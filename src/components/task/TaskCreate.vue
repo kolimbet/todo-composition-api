@@ -17,7 +17,6 @@
         <textarea
           v-model.trim="form.title"
           id="add-form-title"
-          ref="refAddTitle"
           rows="3"
           name="title"
           class="form-control"
@@ -73,8 +72,6 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["close", "add"]);
-
-const refAddTitle = ref(null);
 
 const form = ref({
   title: "",
@@ -149,7 +146,7 @@ watch(
     if (newValue === false) attemptToClearForm();
     else
       setTimeout(() => {
-        refAddTitle.value.focus();
+        document.querySelector("#add-form-title").focus();
       }, animationTransition);
   }
 );

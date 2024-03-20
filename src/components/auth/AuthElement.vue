@@ -68,7 +68,8 @@ function logout() {
   actionLogout()
     .then(() => {
       nextTick(() => {
-        router.push({ name: "login" });
+        // router.push({ name: "login" });
+        router.go();
       });
     })
     .catch((err) => {

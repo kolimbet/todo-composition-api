@@ -1,15 +1,12 @@
 import { computed, ref } from "vue";
 import api from "@/api";
-import router from "@/router";
 
 // State
-const startUrl = ref("/");
 const initiated = ref(false);
 const authorized = ref(false);
 const user = ref(null);
 
 // Getters
-export const getStartUrl = computed(() => startUrl.value);
 export const getInitiated = computed(() => initiated.value);
 export const getAuthorized = computed(() => authorized.value);
 export const getAvatarUrl = computed(() =>
@@ -31,27 +28,26 @@ const setAuthData = (userData = null) => {
 const setEndOfInitialization = () => {
   initiated.value = true;
 };
-export const setStartURL = (url) => {
-  startUrl.value = url;
-};
 
 // Actions
-export const actionStartInit = () =>
+export const actionInitApp = () =>
   new Promise((resolve) => {
-    setStartURL(new URL(window.location));
     setTimeout(() => {
-      actionStartAuth().then(() => {
-        setEndOfInitialization();
-        if (startUrl.value.pathname != "/loading")
-          router.push(startUrl.value.pathname + startUrl.value.search);
-        else router.push("/");
-        resolve(true);
-      });
-    }, 2000);
+      actionStartAuth()
+        .then(() => {
+          setEndOfInitialization();
+          resolve(true);
+        })
+        .catch((err) => {
+          console.log("actionInitApp() error: " + err);
+          setEndOfInitialization();
+          resolve(true);
+        });
+    }, 1000);
   });
 
 const actionStartAuth = () =>
-  new Promise((resolve) => {
+  new Promise((resolve, reject) => {
     api
       .checkAuth()
       .then((userData) => {
@@ -61,7 +57,7 @@ const actionStartAuth = () =>
       })
       .catch((err) => {
         setAuthData();
-        resolve(err);
+        reject(err);
       });
   });
 
