@@ -58,19 +58,14 @@ import {
   getUserName,
   actionLogout,
 } from "@/composables/storeAuth";
-import { nextTick } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-// const route = useRoute();
 
 function logout() {
   actionLogout()
     .then(() => {
-      nextTick(() => {
-        // router.push({ name: "login" });
-        router.go();
-      });
+      router.go();
     })
     .catch((err) => {
       console.log("Error: " + parseErrorObject(err));

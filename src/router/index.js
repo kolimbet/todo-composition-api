@@ -1,4 +1,3 @@
-// import store from "@/store";
 import { createRouter, createWebHistory } from "vue-router";
 import {
   getInitiated,
@@ -31,22 +30,30 @@ const routes = [
       requiresAuthorization: false,
     },
   },
-
-  {
-    path: "/account/:section",
-    name: "account_section",
-    component: () => import("@/components/account/UserAccount.vue"),
-    meta: {
-      requiresAuthorization: true,
-    },
-  },
   {
     path: "/account",
-    name: "account",
     component: () => import("@/components/account/UserAccount.vue"),
     meta: {
       requiresAuthorization: true,
     },
+    children: [
+      {
+        path: "",
+        alias: "home",
+        name: "account",
+        component: () => import("@/components/account/AccountHome.vue"),
+      },
+      {
+        path: "avatar",
+        name: "account_avatar",
+        component: () => import("@/components/account/AccountAvatar.vue"),
+      },
+      {
+        path: "password",
+        name: "account_password",
+        component: () => import("@/components/account/AccountPassword.vue"),
+      },
+    ],
   },
   {
     path: "/:pathMatch(.*)",
