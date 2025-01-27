@@ -34,16 +34,6 @@ Create a configuration file /src/config.js and specify create a BACKEND_DOMAIN c
 export const BACKEND_DOMAIN = "http://todo-app.back";
 ```
 
-Prescribe autocorrect paths for your IDE. I use VS Code and add a local
-settings file /.vscode/settings.json the following instructions for the PathAutocomplete plugin:
-
-```
-// Path Autocomplite
-"path-autocomplete.pathMappings": {
-  "@": ["${workspace}/src"]
-}
-```
-
 I also use Live Sass Compiler. CSS files compiled by this plugin are imported into the project. The sources are in the /src/scss folder.
 
 Compile the project:

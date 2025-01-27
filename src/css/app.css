@@ -1,6 +1,7 @@
 @import "../../node_modules/font-awesome/css/font-awesome.min.css";
 .top-nav-bg-gradient {
   background: rgb(30, 64, 175);
+  background: -webkit-gradient(linear, left top, right top, from(rgb(30, 64, 175)), to(rgb(49, 46, 129)));
   background: linear-gradient(90deg, rgb(30, 64, 175) 0%, rgb(49, 46, 129) 100%);
 }
 
@@ -21,14 +22,17 @@
 
 /* Box Sizing */
 .box-border {
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 .box-content {
-  box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
 }
 
 /* single animations */
 .fade-enter-active, .fade-leave-active {
+  -webkit-transition: all 0.5s linear;
   transition: all 0.5s linear;
 }
 .fade-enter-from, .fade-leave-to {
@@ -36,10 +40,12 @@
 }
 
 .slide-left-enter-active, .slide-left-leave-active {
+  -webkit-transition: all 0.5s linear;
   transition: all 0.5s linear;
 }
 .slide-left-enter-from, .slide-left-leave-to {
-  transform: translateX(-100%);
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
   opacity: 0;
 }
 
@@ -49,6 +55,7 @@
   opacity: 0;
 }
 .folding-x-100-enter-active, .folding-x-100-leave-active {
+  -webkit-transition: all 0.5s linear;
   transition: all 0.5s linear;
   overflow: hidden;
 }
@@ -68,6 +75,7 @@
   overflow: auto;
 }
 .folding-y-50-enter-active, .folding-y-50-leave-active {
+  -webkit-transition: all 0.5s linear;
   transition: all 0.5s linear;
   overflow: hidden;
 }
@@ -82,6 +90,7 @@
   overflow: auto;
 }
 .folding-y-100-enter-active, .folding-y-100-leave-active {
+  -webkit-transition: all 0.5s linear;
   transition: all 0.5s linear;
   overflow: hidden;
 }
@@ -96,6 +105,7 @@
   overflow: auto;
 }
 .folding-y-300-enter-active, .folding-y-300-leave-active {
+  -webkit-transition: all 0.5s linear;
   transition: all 0.5s linear;
   overflow: hidden;
 }
@@ -110,12 +120,14 @@
   overflow: auto;
 }
 .folding-y-1000-enter-active, .folding-y-1000-leave-active {
+  -webkit-transition: all 0.5s linear;
   transition: all 0.5s linear;
   overflow: hidden;
 }
 
 /* list animations */
 .list-folding-y-100-move {
+  -webkit-transition: all 1s linear;
   transition: all 1s linear;
 }
 .list-folding-y-100-enter-from, .list-folding-y-100-leave-to {
@@ -129,14 +141,17 @@
   overflow: auto;
 }
 .list-folding-y-100-enter-active {
+  -webkit-transition: all 0.5s 0.5s linear;
   transition: all 0.5s 0.5s linear;
   overflow: hidden;
 }
 .list-folding-y-100-leave-active {
+  -webkit-transition: all 0.5s linear;
   transition: all 0.5s linear;
   overflow: hidden;
 }
 .list-folding-y-150-move {
+  -webkit-transition: all 1s linear;
   transition: all 1s linear;
 }
 .list-folding-y-150-enter-from, .list-folding-y-150-leave-to {
@@ -150,27 +165,33 @@
   overflow: auto;
 }
 .list-folding-y-150-enter-active {
+  -webkit-transition: all 0.5s 0.5s linear;
   transition: all 0.5s 0.5s linear;
   overflow: hidden;
 }
 .list-folding-y-150-leave-active {
+  -webkit-transition: all 0.5s linear;
   transition: all 0.5s linear;
   overflow: hidden;
 }
 
 .list-scale01-move {
+  -webkit-transition: all 1s linear;
   transition: all 1s linear;
 }
 .list-scale01-enter-from, .list-scale01-leave-to {
-  transform: scale(0.1);
+  -webkit-transform: scale(0.1);
+          transform: scale(0.1);
   opacity: 0;
 }
 .list-scale01-enter-to, .list-scale01-leave-from {
   opacity: 1;
 }
 .list-scale01-enter-active {
+  -webkit-transition: all 0.5s 0.5s linear;
   transition: all 0.5s 0.5s linear;
 }
 .list-scale01-leave-active {
+  -webkit-transition: all 0.5s linear;
   transition: all 0.5s linear;
 }
