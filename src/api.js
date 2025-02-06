@@ -28,18 +28,17 @@ const api = {
       axios
         .post(sourceUrls.login, auth)
         .then(({ data }) => {
-          if (data.access_token) {
-            if (data.user) {
-              token = "Bearer " + data.access_token;
-              localStorage.setItem("token", token);
-              axios.defaults.headers.common["Authorization"] = token;
-              resolve(data.user);
-            } else {
-              reject("ERROR: user data wasn't received");
-            }
-          } else {
+          if (!data.access_token) {
             reject("ERROR: auth token wasn't received");
           }
+          if (!data.user) {
+            reject("ERROR: user data wasn't received");
+          }
+
+          token = "Bearer " + data.access_token;
+          localStorage.setItem("token", token);
+          axios.defaults.headers.common["Authorization"] = token;
+          resolve(data.user);
         })
         .catch((err) => {
           reject(parseApiError(err));
@@ -63,24 +62,25 @@ const api = {
     }),
   checkAuth: () =>
     new Promise((resolve, reject) => {
-      if (!token) reject("no auth Token");
-      else {
-        // console.log("token is:", token);
-        axios.defaults.headers.common["Authorization"] = token;
-
-        axios
-          .get(sourceUrls.user)
-          .then(({ data }) => {
-            // console.log("api->checkAuth", data);
-            resolve(data);
-          })
-          .catch((err) => {
-            token = null;
-            localStorage.removeItem("token");
-            delete axios.defaults.headers.common["Authorization"];
-            reject("ERROR: " + parseApiError(err));
-          });
+      if (!token) {
+        reject("no auth Token");
       }
+
+      // console.log("token is:", token);
+      axios.defaults.headers.common["Authorization"] = token;
+
+      axios
+        .get(sourceUrls.user)
+        .then(({ data }) => {
+          // console.log("api->checkAuth", data);
+          resolve(data);
+        })
+        .catch((err) => {
+          token = null;
+          localStorage.removeItem("token");
+          delete axios.defaults.headers.common["Authorization"];
+          reject("ERROR: " + parseApiError(err));
+        });
     }),
   register: (regData) =>
     new Promise((resolve, reject) => {
@@ -101,8 +101,7 @@ const api = {
           resolve(data);
         })
         .catch((err) => {
-          const message = parseApiError(err);
-          reject(message);
+          reject(parseApiError(err));
         });
     }),
   emailIsFree: (email) =>
@@ -113,8 +112,7 @@ const api = {
           resolve(data);
         })
         .catch((err) => {
-          let message = parseApiError(err);
-          reject(message);
+          reject(parseApiError(err));
         });
     }),
   checkUserPassword: (password) =>
@@ -126,9 +124,8 @@ const api = {
           resolve(data);
         })
         .catch((err) => {
-          let message = parseApiError(err);
-          // console.log("ERROR: checkPassword request error - " + message);
-          reject(message);
+          // console.log("ERROR: checkPassword request error - ", err);
+          reject(parseApiError(err));
         });
     }),
   updateUserPassword: (form) =>
@@ -140,9 +137,8 @@ const api = {
           resolve(data);
         })
         .catch((err) => {
-          let message = parseApiError(err);
-          // console.log("ERROR: updateUserPassword request error - " + message);
-          reject(message);
+          // console.log("ERROR: updateUserPassword request error - ", err);
+          reject(parseApiError(err));
         });
     }),
   /* ------------------------ Avatar ------------------------ */

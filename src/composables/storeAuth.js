@@ -78,19 +78,20 @@ export const actionLogin = (auth) =>
 
 export const actionLogout = () =>
   new Promise((resolve, reject) => {
-    if (!authorized.value) reject("You are not auth");
-    else {
-      api
-        .logout()
-        .then(() => {
-          setAuthData();
-          resolve(true);
-        })
-        .catch((err) => {
-          console.log("storeAuth->actionLogout error:", err);
-          reject(err);
-        });
+    if (!authorized.value) {
+      reject("You are not auth");
     }
+
+    api
+      .logout()
+      .then(() => {
+        setAuthData();
+        resolve(true);
+      })
+      .catch((err) => {
+        console.log("storeAuth->actionLogout error:", err);
+        reject(err);
+      });
   });
 
 export const actionSetAvatar = (imageId) =>

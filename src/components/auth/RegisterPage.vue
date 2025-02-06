@@ -11,7 +11,7 @@
             class="px-3 py-2 mx-auto mt-4 rounded-2 border border-green border-opacity-50 bg-green-light text-green-dark"
           >
             <div class="mb-4 text-center">
-              Registration completed successfully. Тow log in using the entered
+              Registration completed successfully. Now log in using the entered
               email and password
             </div>
 
